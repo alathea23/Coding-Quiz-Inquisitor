@@ -1,0 +1,34 @@
+[
+    {
+        "question": "Commonly Used Data Types do NOT include: ?",
+        "optionA": "boolean",
+        "optionB": "alerts",
+        "optionC": "numbers",
+        "optionD": "strings",
+        "correctanswer": "optionB"
+    },
+    {
+        "question": "The condition in an if/else statement is enclosed with _____ ?",
+        "optionA": "curly brackets",
+        "optionB": "parentheses",
+        "optionC": "straight brackets",
+        "optionD": "quotation marks",
+        "correctanswer": "optionA"
+    },
+    {
+        "question": "Arrays in JavaScript can be used to store ____??",
+        "optionA": "boolean values",
+        "optionB": "numbers",
+        "optionC": "strings",
+        "optionD": "all of the above",
+        "correctanswer": "optionD"
+    },
+    {
+       "question": "String values must be enclosed within _____ when being assigned to variables?",
+       "optionA": "curly brackets",
+       "optionB": "parentheses",
+       "optionC": "straight brackets",
+       "optionD": "quotation marks",
+       "correctanswer": "optionD"
+    }
+]
