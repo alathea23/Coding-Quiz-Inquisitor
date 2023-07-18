@@ -8,43 +8,55 @@
     <meta name="Description" content="Coding Trivialities">
     <title>Coding Quiz Inquisitor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./style.css">
+
 </head>
 
-<header style="background: url(./Assets/updatedpubquiz.jpeg/updatedpubquiz.jpeg.001.jpeg)"
-    class="jumbotron bg-cover text-dark">
-    <div class="container py-5 text-center">
-        <h1 class="display-4 font-weight-bold">Time Left: 0</h1>
-        <p class="font-italic mb-0">Using simple jumbotron-style component, create a nice Bootstrap 4 header with a
-            background image.</p>
-        <p class="font-italic">Snippe by
-            <a href="https://bootstrapious.com" class="text-white">
-                <u>Bootstrapious</u>
-            </a>
-        </p>
-        <a href="#" role="button" class="btn btn-primary px-5">See High Scores</a>
-    </div>
-</header>
 
-<!-- For Demo Purpose -->
+<div class="responsive">
+    <div>
+        <div>
+            <a href="#" role="button" class="btn-primary px-5 bottom">See High Scores</a>
+        </div>
+    </div>
+</div>
+
+<!--building the questions and answer buttons skeleton  -->
 
 <body class="container py-5">
-    <h2 class="h3 font-weight-bold">Pub Quiz Timer</h2>
-    <div class="container">
-        <div id="questions-container" class="hide">
-            <div class="question"></div>
-            <ul class=".col-sm-">
-                <div class="answer" id="A1"></div>
-                <div class="answer" id="A2"></div>
-                <div class="answer" id="A3"></div>
-                <div class="answer" id="A4"></div>
-            </ul>
-            <div class="controls">
-                <button id="start-btn" class="start-btn btn">Begin</button>
-                <button id="next-btn" class="next-btn btn hide">Next</button>
+    <div class="start-screen">
+        <button id="start-btn" class="start-btn btn">Begin</button>
+        <button id="next-btn" class="next-btn btn hide">Next</button>
+    </div>
+    <div class="hide quiz-container">
+        <div class="count">
+            <h2 class="h3 font-weight-bold" id="timer">Pub Quiz Timer</h2>
+            <div class="number-of-count">
+                <span class="number-of-question">1 of 3 questions</span>
             </div>
         </div>
+        <div class="container">
+            <div id="questions-container">
+                <div class="question"></div>
+                <ul class=".col-sm- answers">
+                    <button class="answer btn" id="A1">Answer 1</button>
+                    <button class="answer btn" id="A2">Answer 2</button>
+                    <button class="answer btn" id="A3">Answer 3</button>
+                    <button class="answer btn" id="A4">Answer 4</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="score-container hide">
+        <div id="user-score">Demo Score</div>
+        <button id="restart">Restart</button>
+    </div>
 </body>
 
+<!-- Script -->
+<script href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script href="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script href="./script.js"></script>
 
 </html>
