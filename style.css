@@ -9,21 +9,22 @@
 .responsive {
     background-image: url("./Assets/updatedpubquiz.jpeg/updatedpubquiz.jpeg.001.jpeg");
     background-color: rgb(201, 178, 130);
-    background-size: cover;
+    background-size: 100vw;
     background-position: center !important;
-    max-width: 100%;
-    text-emphasis-style: bold; 
     display: flex !important;
     background-repeat: no-repeat;
-    height: 220px;
     justify-content: center;
     align-items: bottom;
     color: coral;
+    height: 22vw;
     flex-grow: 8;
-    flex-shrink: 5;
-    border: 0px;
-    padding: 0px;
-    margin: 0px
+    flex-shrink: 12;
+    border: 0px !important;
+    padding: 0px !important;
+    margin: 0px;
+    width: 100vw;
+   
+
 }
 
 /*

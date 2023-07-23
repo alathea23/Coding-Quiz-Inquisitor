@@ -1,17 +1,17 @@
 //establishes base variables
-var startBtn = document.getElementByID('start-btn')
+var startBtn = document.getElementByID("start-btn")
 var nextBtn = document.getElementByID("next-btn")
 var restartBtn = document.getElementByID("restart")
 var highScore = document.getElementByID("user-score")
 var timer = document.getElementByID("timer")
 var QuestionText = document.getElementByID("question");
-var answerText = document.getElementByID("answers");
+var answerText = document.getElementsByClassName("answer");
 var answer1text = document.getElementByID("A1")
 var answer2text = document.getElementByID("A2")
 var answer3text = document.getElementByID("A3")
 var answer4text = document.getElementByID("A4")
-const quizContainerElement = document.getElementById('quiz-container')
-const questionContainerElement = document.getElementById('question-container')
+const quizContainerElement = document.getElementsByClassName('quiz-container')
+const questionContainerElement = document.getElementsByClassName('questions-container')
 
 var questionNum = 0
 var testScore = 0
