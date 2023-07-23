@@ -1,26 +1,29 @@
 //establishes base variables
-var startBtn = document.getElementByID("start-btn")
-var nextBtn = document.getElementByID("next-btn")
-var restartBtn = document.getElementByID("restart")
-var highScore = document.getElementByID("user-score")
-var timer = document.getElementByID("timer")
-var QuestionText = document.getElementByID("question");
-var answerText = document.getElementsByClassName("answer");
-var answer1text = document.getElementByID("A1")
-var answer2text = document.getElementByID("A2")
-var answer3text = document.getElementByID("A3")
-var answer4text = document.getElementByID("A4")
-const quizContainerElement = document.getElementsByClassName('quiz-container')
-const questionContainerElement = document.getElementsByClassName('questions-container')
-
+var startBtn = document.querySelector("#start-btn")
+var nextBtn = document.querySelector("#next-btn")
+var restartBtn = document.querySelector("#restart")
+var highScore = document.querySelector("#user-score")
+var timer = document.querySelector("#timer")
+var QuestionText = document.querySelector("#question");
+var answerText = document.querySelector(".answer");
+var answer1text = document.querySelector("#A1")
+var answer2text = document.querySelector("#A2")
+var answer3text = document.querySelector("#A3")
+var answer4text = document.querySelector("#A4")
+const quizContainerElement = document.querySelector('.quiz-container')
+const questionContainerElement = document.querySelector('.questions-container')
 var questionNum = 0
 var testScore = 0
+var shuffledQuestions
 
-var shuffledQuestions, questionNum
+//goes to the next question in the list
 
 
-// holds the information for the quiz questions and available answers
-var quizQuestions = [
+const selectedButton = e.target
+    const correct = selectedButton.dataset.correct
+
+  // holds the information for the quiz questions and available answers
+  var quizQuestions = [
     {
         question: "Commonly Used Data Types do NOT include: ?",
         answers: [
@@ -45,7 +48,7 @@ var quizQuestions = [
             { text: "numbers", correct: false},
             { text: "strings", correct: false},
             { text: "all of the above", correct: true},
- ] },
+  ] },
     {
         question: "String values must be enclosed within _____ when being assigned to variables?",
         answers: [
@@ -55,13 +58,28 @@ var quizQuestions = [
             { text:  "quotation marks", correct: false},
   ]  
     }
-]
+  ]
 
+  //sets up logic for correct and incorrect answers to show user if they got the correct answer//
+
+  function clearStatusClass(element) {
+    element.classList.remove('correct')
+    element.classList.remove('wrong')
+  }
+
+  function setStatusClass(element, correct) {
+    clearStatusClass(element)
+    if (correct) {
+      element.classList.add('correct')
+    } else {
+      element.classList.add('wrong')
+    }
+  }
+
+  //sets up logic for questions and answer buttons for quiz gen//
 function selectAnswer() {
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
     setStatusClass(document.body, correct)
-    Array.from(answerText.children).forEach(button => {
+    quizQuestions.from(answerText.children).forEach(button => {
       setStatusClass(button, button.dataset.correct)
     })
     if (shuffledQuestions.length > questionNum + 1) {
@@ -74,9 +92,9 @@ function selectAnswer() {
 
 //generates quiz questions
   
-  function showQuestion(question) {
-    QuestionText.innerText = question.question
-    question.answers.forEach(answer => {
+  function showQuestion(quizQuestions) {
+    QuestionText.innerText = quizQuestions.question
+    quizQuestions.answers.forEach(answer => {
       const button = document.createElement('button')
       button.innerText = answer.text
       button.classList.add('btn')
@@ -95,21 +113,13 @@ function selectAnswer() {
 
 function quizGen() {
     startBtn.classList.add("hide")
-    QuestionText.classList.remove("hide")
+    quizContainerElement.classList.remove("hide")
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     questionNum = 0
+    showQuestion();
+    selectAnswer();
     setNextQuestion()
-    showQuestion()
 }
-
-//goes to the next question in the list
-
-    QuestionText.value = question;
-    answer1text.value = answer1
-    answer2text.value = answer2
-    answer3text.value = answer3
-    answer4text.value = answer4
-
 
   function resetState() {
     clearStatusClass(document.body)
@@ -119,23 +129,16 @@ function quizGen() {
     }
   }
   
-  function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if (correct) {
-      element.classList.add('correct')
-    } else {
-      element.classList.add('wrong')
-    }
-  }
-  
-  function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
-  }
 
-  startBtn.addEventListener("click", quizGen())
+  startBtn.addEventListener("click", quizGen)
   nextBtn.addEventListener("click", () => {
-      questionNum++, setNextQuestions ()
+      questionNum++, setNextQuestion()
   })
   restartBtn.addEventListener("click", quizGen())
   
+  QuestionText.value = question;
+  answer1text.value = answer1
+  answer2text.value = answer2
+  answer3text.value = answer3
+  answer4text.value = answer4
+
