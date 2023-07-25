@@ -1,5 +1,5 @@
 //establishes base variables
-var startBtn = document.querySelector("#start-btn")
+var startBtn = document.getElementById("#start-btn")
 var nextBtn = document.querySelector("#next-btn")
 var restartBtn = document.querySelector("#restart")
 var highScore = document.querySelector("#user-score")
@@ -104,12 +104,12 @@ function selectAnswer() {
       button.addEventListener('click', selectAnswer)
       answerText.appendChild(button)
     })
-  }
+  };
 
   function setNextQuestion() {
     resetState()
     showQuestion(shuffledQuestions[questionNum])
-  }
+  };
 
 function quizGen() {
     startBtn.classList.add("hide")
@@ -119,7 +119,7 @@ function quizGen() {
     showQuestion();
     selectAnswer();
     setNextQuestion()
-}
+};
 
   function resetState() {
     clearStatusClass(document.body)
@@ -127,14 +127,14 @@ function quizGen() {
     while (answerText.firstChild) {
       answerText.removeChild(answerText.firstChild)
     }
-  }
+  };
   
 
-  startBtn.addEventListener("click", quizGen)
+  startBtn.addEventListener("click", quizGen);
   nextBtn.addEventListener("click", () => {
       questionNum++, setNextQuestion()
-  })
-  restartBtn.addEventListener("click", quizGen())
+  });
+  restartBtn.addEventListener("click", quizGen)
   
   QuestionText.value = question;
   answer1text.value = answer1
