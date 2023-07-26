@@ -1,15 +1,15 @@
 //establishes base variables
-var startBtn = document.getElementById("#start-btn")
-var nextBtn = document.querySelector("#next-btn")
-var restartBtn = document.querySelector("#restart")
-var highScore = document.querySelector("#user-score")
-var timer = document.querySelector("#timer")
-var QuestionText = document.querySelector("#question");
-var answerText = document.querySelector(".answer");
-var answer1text = document.querySelector("#A1")
-var answer2text = document.querySelector("#A2")
-var answer3text = document.querySelector("#A3")
-var answer4text = document.querySelector("#A4")
+var startBtn = document.getElementById("start-btn")
+var nextBtn = document.querySelector("next-btn")
+var restartBtn = document.querySelector("restart")
+var highScore = document.querySelector("user-score")
+var timer = document.querySelector("timer")
+var QuestionText = document.querySelector("question");
+var answerText = document.querySelector("answer");
+var answer1text = document.querySelector("A1")
+var answer2text = document.querySelector("A2")
+var answer3text = document.querySelector("A3")
+var answer4text = document.querySelector("A4")
 const quizContainerElement = document.querySelector('.quiz-container')
 const questionContainerElement = document.querySelector('.questions-container')
 var questionNum = 0
@@ -18,9 +18,6 @@ var shuffledQuestions
 
 //goes to the next question in the list
 
-
-const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
 
   // holds the information for the quiz questions and available answers
   var quizQuestions = [
@@ -82,6 +79,9 @@ function selectAnswer() {
     quizQuestions.from(answerText.children).forEach(button => {
       setStatusClass(button, button.dataset.correct)
     })
+    const selectedButton = e.target
+    const correct = selectedButton.dataset.correct
+
     if (shuffledQuestions.length > questionNum + 1) {
       nextBtn.classList.remove('hide')
     } else {
@@ -93,7 +93,7 @@ function selectAnswer() {
 //generates quiz questions
   
   function showQuestion(quizQuestions) {
-    QuestionText.innerText = quizQuestions.question
+    QuestionText.contents = quizQuestions.question
     quizQuestions.answers.forEach(answer => {
       const button = document.createElement('button')
       button.innerText = answer.text
@@ -114,7 +114,7 @@ function selectAnswer() {
 function quizGen() {
     startBtn.classList.add("hide")
     quizContainerElement.classList.remove("hide")
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
+    //shuffledQuestions = questions.sort(() => Math.random() - .5)
     questionNum = 0
     showQuestion();
     selectAnswer();
