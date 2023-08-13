@@ -16,9 +16,7 @@
 
 <div class="responsive">
     <div>
-        <div>
-            <a href="#" role="button" class="btn-primary px-5 bottom">See High Scores</a>
-        </div>
+
     </div>
 </div>
 
@@ -26,8 +24,10 @@
 
 <body>
     <div class="start-screen container py-5">
+        <a href="#" role="button" class="btn-primary px-5 bottom">See High Scores</a>
+    </div>
+    <div class="start-screen container py-5">
         <button id="start-btn" class="start-btn btn">Begin</button>
-        <button id="next-btn" class="next-btn btn hide">Next</button>
     </div>
     <div class="hide quiz-container container py-5">
         <div class="count">
@@ -38,7 +38,7 @@
         </div>
         <div class="container">
             <div id="questions-container">
-                <div id="question"></div>
+                <div class="question">T</div>
                 <ul class=".col-sm- answers">
                     <button class="answer btn" id="A1">Answer 1</button>
                     <button class="answer btn" id="A2">Answer 2</button>
@@ -47,6 +47,7 @@
                 </ul>
             </div>
         </div>
+        <button id="next-btn" class="next-btn btn hide">Next</button>
     </div>
     <div class="score-container hide container py-5">
         <div id="user-score">Demo Score</div>

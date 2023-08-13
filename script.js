@@ -1,62 +1,70 @@
 //establishes base variables
 var startBtn = document.getElementById("start-btn")
-var nextBtn = document.querySelector("next-btn")
-var restartBtn = document.querySelector("restart")
-var highScore = document.querySelector("user-score")
-var timer = document.querySelector("timer")
-var QuestionText = document.querySelector("question");
-var answerText = document.querySelector("answer");
-var answer1text = document.querySelector("A1")
-var answer2text = document.querySelector("A2")
-var answer3text = document.querySelector("A3")
-var answer4text = document.querySelector("A4")
+var nextBtn = document.getElementById("next-btn")
+var restartBtn = document.querySelector("#restart")
+var highScore = document.querySelector("#user-score")
+var timer = document.querySelector("#timer")
+var QuestionText = document.querySelector(".question");
+var ansButton = document.createElement('button')
+var answerText = document.querySelector(".answers");
+var answer1text = document.querySelector("#A1")
+var answer2text = document.querySelector("#A2")
+var answer3text = document.querySelector("#A3")
+var answer4text = document.querySelector("#A4")
 const quizContainerElement = document.querySelector('.quiz-container')
 const questionContainerElement = document.querySelector('.questions-container')
+var NumofQues = document.querySelector(".number-of-question")
 var questionNum = 0
 var testScore = 0
-var shuffledQuestions
+//var shuffledQuestions
 
-//goes to the next question in the list
 
+//testing the target for questions text insertion
+QuestionText.innerText = "testing"
+NumofQues.textContent = "testing"
 
   // holds the information for the quiz questions and available answers
   var quizQuestions = [
     {
-        question: "Commonly Used Data Types do NOT include: ?",
+        question: "Commonly used data types do NOT include ____ ?",
         answers: [
-           { text: "boolean", correct: false},
-           { text: "alerts", correct: true},
-            { text: "numbers", correct: false},
-            { text: "strings", correct: false}]
+           { text: "Boolean", correct: false},
+           { text: "Alerts", correct: true},
+            { text: "Numbers", correct: false},
+            { text: "Strings", correct: false}]
         },
     {
-        question: "The condition in an if/else statement is enclosed with _____ ?",
+        question: "The condition in an if/else statement is enclosed with ____ ?",
         answers: [
-            { text: "curly brackets", correct: true},
-            { text: "parentheses", correct: false},
-            { text: "straight brackets", correct: false},
-            { text: "quotation marks", correct: false},
+            { text: "Curly brackets", correct: true},
+            { text: "Parentheses", correct: false},
+            { text: "Straight brackets", correct: false},
+            { text: "Quotation marks", correct: false},
         ],
     },
     {
-        question: "Arrays in JavaScript can be used to store ____??",
+        question: "Arrays in JavaScript can be used to store ____ ?",
         answers: [
-            { text: "boolean values", correct: false},
-            { text: "numbers", correct: false},
-            { text: "strings", correct: false},
-            { text: "all of the above", correct: true},
+            { text: "Boolean values", correct: false},
+            { text: "Numbers", correct: false},
+            { text: "Strings", correct: false},
+            { text: "All of the above", correct: true},
   ] },
     {
         question: "String values must be enclosed within _____ when being assigned to variables?",
         answers: [
-            { text:  "curly brackets",  correct: false},
-            { text:  "parentheses", correct: false},
-            { text:  "straight brackets", correct: false},
-            { text:  "quotation marks", correct: false},
+            { text:  "Curly brackets",  correct: false},
+            { text:  "Parentheses", correct: false},
+            { text:  "Straight brackets", correct: false},
+            { text:  "Quotation marks", correct: false},
   ]  
     }
   ]
 
+  console.log (quizQuestions[questionNum].question)
+  console.log (quizQuestions[questionNum].answers)
+  console.log (quizQuestions[questionNum].answers[0])
+  console.log (quizQuestions[questionNum].answers[0].correct)
   //sets up logic for correct and incorrect answers to show user if they got the correct answer//
 
   function clearStatusClass(element) {
@@ -72,17 +80,27 @@ var shuffledQuestions
       element.classList.add('wrong')
     }
   }
-
   //sets up logic for questions and answer buttons for quiz gen//
-function selectAnswer() {
-    setStatusClass(document.body, correct)
-    quizQuestions.from(answerText.children).forEach(button => {
-      setStatusClass(button, button.dataset.correct)
-    })
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
 
-    if (shuffledQuestions.length > questionNum + 1) {
+  function selectAnswer() {
+  //  setStatusClass(ansButton, correct)
+ // const selectedButton = e.target
+ // const correct = selectedButton.dataset.correct
+//src for turning answers back into an array to call forEach function again https://codedamn.com/news/javascript/how-to-fix-typeerror-foreach-is-not-a-function-in-javascript
+ arrayAns = Array.from(answerText.children)
+ console.log(arrayAns)
+ arrayAns.forEach(ansButton => {
+  if (ansButton.correct) {
+    ansButton.classList.add('correct')
+  } else {
+    ansButton.classList.add('wrong')
+  }
+
+      setStatusClass(ansButton, ansButton.correct)
+    })
+   
+
+    if (quizQuestions.length > questionNum + 1) {
       nextBtn.classList.remove('hide')
     } else {
       startBtn.innerText = 'Restart'
@@ -90,25 +108,38 @@ function selectAnswer() {
     }
   }
 
+
 //generates quiz questions
   
   function showQuestion(quizQuestions) {
-    QuestionText.contents = quizQuestions.question
-    quizQuestions.answers.forEach(answer => {
-      const button = document.createElement('button')
-      button.innerText = answer.text
-      button.classList.add('btn')
+    QuestionText.innerText = quizQuestions[questionNum].question
+    NumofQues.textContent = ((questionNum+1) + " of " + quizQuestions.length + " Questions \n")
+    quizQuestions[questionNum].answers.forEach(answer => {
+      console.log(answer.text)
+      var ansButton = document.createElement('button')
+      ansButton.innerText = answer.text
+      ansButton.classList.add('btn')
+      console.log(answer.correct)
       if (answer.correct) {
-        button.dataset.correct = answer.correct
+        ansButton.correct = true
+        console.log("this answer is correct")
+        console.log(ansButton.correct)
       }
-      button.addEventListener('click', selectAnswer)
-      answerText.appendChild(button)
+      else {
+        ansButton.correct = false
+        console.log(ansButton.correct)
+      }
+      answerText.appendChild(ansButton) 
+      ansButton.addEventListener('click', selectAnswer)
     })
+
   };
 
+
+//goes to the next question in the list
   function setNextQuestion() {
     resetState()
-    showQuestion(shuffledQuestions[questionNum])
+    showQuestion(quizQuestions)
   };
 
 function quizGen() {
@@ -116,7 +147,7 @@ function quizGen() {
     quizContainerElement.classList.remove("hide")
     //shuffledQuestions = questions.sort(() => Math.random() - .5)
     questionNum = 0
-    showQuestion();
+    showQuestion(quizQuestions);
     selectAnswer();
     setNextQuestion()
 };
@@ -131,14 +162,14 @@ function quizGen() {
   
 
   startBtn.addEventListener("click", quizGen);
-  nextBtn.addEventListener("click", () => {
+
+  nextBtn.addEventListener("click", function nextQ() {
       questionNum++, setNextQuestion()
   });
   restartBtn.addEventListener("click", quizGen)
   
-  QuestionText.value = question;
-  answer1text.value = answer1
-  answer2text.value = answer2
-  answer3text.value = answer3
-  answer4text.value = answer4
-
+  //QuestionText.value = question;
+  //answer1text.value = answer1
+  //answer2text.value = answer2
+  //answer3text.value = answer3
+ // answer4text.value = answer4

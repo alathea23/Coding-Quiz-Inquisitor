@@ -23,8 +23,6 @@
     padding: 0px !important;
     margin: 0px;
     width: 100vw;
-   
-
 }
 
 body {
@@ -73,11 +71,18 @@ button {
     cursor: pointer;
 }
 
-#start-button,
-#restart {
+#start-btn,
+#restart, #next-btn {
     font-size: 1.3em;
     padding: 0.5em 1.8em;
     border-radius: 0.2em;
+    font-size: 1em;
+    margin-top: 1.5em;
+    background-color: #0a69ed;
+    color: #ffffff;
+    padding: 0.7em 1.8em;
+    border-radius: 0.3em;
+    float: right;
 }
 
 #restart {
@@ -119,6 +124,13 @@ button {
     font-weight: 600;
 }
 
+.number-of-question {
+    color: #2b948f;
+    display: flex;
+    margin-top: 10px !important;
+    margin-bottom: 15px !important;
+}
+
 .option-div {
     font-size: 0.9em;
     width: 100%;
@@ -134,16 +146,6 @@ button {
 .option-div:disabled {
     color: #000000;
     cursor: not-allowed;
-}
-
-#next-button {
-    font-size: 1em;
-    margin-top: 1.5em;
-    background-color: #0a69ed;
-    color: #ffffff;
-    padding: 0.7em 1.8em;
-    border-radius: 0.3em;
-    float: right;
 }
 
 .hide {
