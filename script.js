@@ -89,7 +89,6 @@ console.log(quizQuestions[questionNum].answers[0].correct)
 
 //sets up timer
 function startTime() {
-  var timeLeft = 30;
 
   var timerId = setInterval(countdown, 1000);
 
@@ -108,7 +107,6 @@ function startTime() {
 //sets up logic for questions and answer buttons for quiz gen//
 
 function selectAnswer() {
-  ansButton.removeEventListener('click', selectAnswer);
 
   //  setStatusClass(ansButton, correct)
   // const selectedButton = e.target
@@ -117,6 +115,7 @@ function selectAnswer() {
   arrayAns = Array.from(answerText.children)
   console.log(arrayAns)
   arrayAns.forEach(ansButton => {
+    ansButton.removeEventListener('click', selectAnswer);
     if (ansButton.correct) {
       ansButton.classList.add('correct')
     } else {
@@ -124,6 +123,15 @@ function selectAnswer() {
     }
     //  setStatusClass(ansButton, ansButton.correct)
   })
+
+  if (ansButton.correct) {
+    timeLeft = timeLeft + 5
+    console.log ("adding 5")
+  }
+  else {
+    timeLeft = timeLeft - 5
+    console.log ("subtracting 5")
+  }
 
   if (quizQuestions.length > questionNum + 1) {
     nextBtn.classList.remove('hide')
@@ -146,23 +154,19 @@ function showQuestion(quizQuestions) {
     ansButton.classList.add('btn')
     ansButton.classList.add('answer')
     console.log(answer.correct)
-   
+
     if (answer.correct) {
       ansButton.correct = true
       console.log("this answer is correct")
       console.log(ansButton.correct)
-      ansButton.addEventListener("click", function performance () {timeLeft = (timeLeft + 5);
-        console.log("adding 5")})
     }
     else {
       ansButton.correct = false
       console.log(ansButton.correct)
-      ansButton.addEventListener("click", function performance () {timeLeft = (timeLeft - 5);
-        console.log("subtracting 5")})
     }
     answerText.appendChild(ansButton)
-    ansButton.addEventListener('click', selectAnswer)
-  });
+    ansButton.addEventListener('click', selectAnswer);
+  })
 };
 
 //goes to the next question in the list
