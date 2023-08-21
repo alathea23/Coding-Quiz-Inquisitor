@@ -95,7 +95,7 @@ console.log(quizQuestions[questionNum].answers[0])
 console.log(quizQuestions[questionNum].answers[0].correct)
 
 function trackHighScores() {
-var newname = prompt("Enter Player Name")
+var newname = prompt("Enter Player Initials")
 //source code for adding new scores to array https://stackoverflow.com/questions/47858518/highscore-in-local-storage-javascript
 var result = [{Name: newname, //creating the structure for the new score
   pScore: score}]
