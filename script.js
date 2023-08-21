@@ -2,12 +2,13 @@
 var startBtn = document.getElementById("start-btn")
 var nextBtn = document.getElementById("next-btn")
 var restartBtn = document.querySelector("#restart")
-var highScore = document.querySelector("#user-score")
+var userScore = document.querySelector("#user-score")
 var timer = document.querySelector("#timer")
 var QuestionText = document.querySelector(".question");
 var ansButton = document.createElement('button')
 var answerText = document.querySelector(".answers");
-var highScores = document.querySelector(".high-scores")
+var highScoresBtn = document.querySelector(".high-scores")
+var clearScoresBtn = document.querySelector(".clear-scores")
 //var answer1text = document.querySelector("#A1")
 //var answer2text = document.querySelector("#A2")
 //var answer3text = document.querySelector("#A3")
@@ -18,10 +19,15 @@ const scoreContainer = document.querySelector('.score-container')
 const startScreen = document.querySelector(".start-screen")
 var NumofQues = document.querySelector(".number-of-question")
 var questionNum = 0
-var testScore = 0
 var timeLeft = 30
-//var shuffledQuestions
+var score = 0
+var highScores = []
+let timerId
 
+//getting high scores from local storage
+var savedScores = JSON.parse(localStorage.getItem('highScores')) || [{Name: 'user1', pScore: '0'}, {Name: 'user2', pScore: '0'}, {Name: 'user3', pScore: '0'}, {Name: 'user4', pScore: '0'}, {Name: 'user5', pScore: '0'}]
+//var shuffledQuestions
+console.log(savedScores)
 
 //testing the target for questions text insertion
 QuestionText.innerText = "testing"
@@ -63,6 +69,23 @@ var quizQuestions = [
       { text: "Straight brackets", correct: false },
       { text: "Quotation marks", correct: true },
     ]
+  },
+  {
+    question: "Booleans have ___ possible values",
+    answers: [
+      { text: "2 ", correct: true },
+      { text: "unlimited", correct: false},
+    ]
+  },
+  {
+    question: "Which of the following are NOT array methods?",
+    answers: [
+      { text: "forEach()", correct: false },
+      { text: "sort()", correct: false },
+      { text: "reverse()", correct: false},
+      { text: "listOut()", correct: true},
+      { text: "indexOf()", correct: false},
+    ]
   }
 ]
 
@@ -70,22 +93,28 @@ console.log(quizQuestions[questionNum].question)
 console.log(quizQuestions[questionNum].answers)
 console.log(quizQuestions[questionNum].answers[0])
 console.log(quizQuestions[questionNum].answers[0].correct)
-//sets up logic for correct and incorrect answers to show user if they got the correct answer//
 
-//function clearStatusClass(element) {
-// element.classList.remove('correct')
-// element.classList.remove('incorrect')
-//}
+function trackHighScores() {
+var newname = prompt("Enter Player Name")
+//source code for adding new scores to array https://stackoverflow.com/questions/47858518/highscore-in-local-storage-javascript
+var result = [{Name: newname, //creating the structure for the new score
+  pScore: score}]
+  var highScores = []
+  var savedScores = JSON.parse(localStorage.getItem('highScores')) || [{Name:'user1', pScore:'0'}, {Name: 'user2', pScore: '0'}, {Name: 'user3', pScore: '0'}, {Name: 'user4', pScore: '0'}, {Name: 'user5', pScore: '0'}];
 
-//function setStatusClass(element, correct) {
-// clearStatusClass(element)
-// if (correct) {
-//    element.classList.add('correct')
-//  } else {
-//    element.classList.add('incorrect')
-//  }
-//}
-
+  console.log(savedScores);
+  console.log(highScores);
+  console.log(score);
+var highScores = savedScores.concat(result); //adding in the latest score
+console.log(savedScores);
+  highScores.sort((a, b) => b.pScore - a.pScore); //sorts descending
+  highScores.slice(0,10); //take 10 highest
+  console.log(highScores);
+localStorage.setItem('highScores', JSON.stringify(highScores)) //logs updated high scores
+var savedScores = JSON.parse(localStorage.getItem('highScores'))
+console.log (savedScores)
+userScore.innerHTML = "Name: " + newname + " . " + " . " + " . "  + "      Score: " + score
+}
 
 //sets up timer
 function startTime() {
@@ -93,9 +122,11 @@ function startTime() {
   var timerId = setInterval(countdown, 1000);
 
   function countdown() {
-    if (timeLeft == 0) {
+    if (timeLeft <= 0) {
       clearTimeout(timerId);
       scoreContainer.classList.remove('hide')
+      quizContainerElement.classList.add("hide")
+      trackHighScores()
     } else {
       timer.textContent = timeLeft + ' seconds remaining';
       timeLeft--;
@@ -108,31 +139,34 @@ function startTime() {
 
 function selectAnswer() {
 
-  //  setStatusClass(ansButton, correct)
-  // const selectedButton = e.target
-  // const correct = selectedButton.dataset.correct
   //src for turning answers back into an array to call forEach function again https://codedamn.com/news/javascript/how-to-fix-typeerror-foreach-is-not-a-function-in-javascript
-  arrayAns = Array.from(answerText.children)
   console.log(arrayAns)
   arrayAns.forEach(ansButton => {
     ansButton.removeEventListener('click', selectAnswer);
     if (ansButton.correct) {
       ansButton.classList.add('correct')
+      console.log("finding correct")
     } else {
       ansButton.classList.add('incorrect')
     }
-    //  setStatusClass(ansButton, ansButton.correct)
   })
 
-  if (ansButton.correct) {
+  var youreRight = document.querySelector(".btn:focus.correct")
+ // var youreWrong = document.querySelector(".btn:focus.incorrect")
+
+  if (youreRight) {
     timeLeft = timeLeft + 5
+    score ++
+    console.log(score)
     console.log ("adding 5")
+
   }
   else {
     timeLeft = timeLeft - 5
     console.log ("subtracting 5")
   }
 
+    //  setStatusClass(ansButton, ansButton.correct)
   if (quizQuestions.length > questionNum + 1) {
     nextBtn.classList.remove('hide')
   } else {
@@ -144,7 +178,6 @@ function selectAnswer() {
 //generates quiz questions
 
 function showQuestion(quizQuestions) {
-  startTime()
   QuestionText.innerText = quizQuestions[questionNum].question
   NumofQues.textContent = ("Question " + (questionNum + 1) + " (of " + quizQuestions.length + ")")
   quizQuestions[questionNum].answers.forEach(answer => {
@@ -153,7 +186,7 @@ function showQuestion(quizQuestions) {
     ansButton.innerText = answer.text
     ansButton.classList.add('btn')
     ansButton.classList.add('answer')
-    console.log(answer.correct)
+    //console.log(answer.correct)
 
     if (answer.correct) {
       ansButton.correct = true
@@ -167,6 +200,7 @@ function showQuestion(quizQuestions) {
     answerText.appendChild(ansButton)
     ansButton.addEventListener('click', selectAnswer);
   })
+  arrayAns = Array.from(answerText.children)
 };
 
 //goes to the next question in the list
@@ -178,10 +212,13 @@ function setNextQuestion() {
 function quizGen() {
   startScreen.classList.add("hide")
   quizContainerElement.classList.remove("hide")
+  scoreContainer.classList.add('hide')
   //shuffledQuestions = questions.sort(() => Math.random() - .5)
   questionNum = 0
+  timeLeft = 30
   resetState()
   showQuestion(quizQuestions);
+  startTime(timeLeft)
 };
 
 function resetState() {
@@ -194,20 +231,62 @@ function resetState() {
 
 function quizGenRestart () {
   scoreContainer.classList.add('hide')
-  startTime ()
-  quizGen ()
+  quizGen (timeLeft)
 }
 
+//start button listener
 startBtn.addEventListener("click", quizGen);
 
+
+//next button listener & end of quiz logic
 nextBtn.addEventListener("click", function nextQ() {
-  questionNum++, setNextQuestion()
+  if (questionNum < (quizQuestions.length - 1)) {
+    questionNum++, setNextQuestion()} 
+    else if (questionNum >= (quizQuestions.length -1))//
+    {
+      clearTimeout(timerId);
+      quizContainerElement.classList.add("hide")
+      scoreContainer.classList.remove("hide")
+      trackHighScores ()
+    }
 });
 
-restartBtn.addEventListener("click", quizGenRestart)
+restartBtn.addEventListener("click", function startAgain() {
+ quizGenRestart (timeLeft)
+})
 
   //QuestionText.value = question;
   //answer1text.value = answer1
   //answer2text.value = answer2
   //answer3text.value = answer3
  // answer4text.value = answer4
+
+ //showing high scores in score container
+ function showHighScores() {
+  //clearing old data
+  while (userScore.firstChild) {
+   userScore.removeChild(userScore.firstChild)
+  }
+  scoreContainer.classList.remove('hide')
+  var savedScores = JSON.parse(localStorage.getItem('highScores'))
+  console.log(savedScores)
+//adding in each sorce in the array as a child
+  savedScores.forEach(score => {
+    playerName = score.Name
+    playerScore = score.pScore
+    console.log(playerName + playerScore)
+
+    var ScoreText = document.createElement('div')
+    ScoreText.innerHTML = "Name: " + playerName + " . " + " . " + " . "  + "      Score: " + playerScore
+    userScore.appendChild(ScoreText)
+
+  })
+ }
+
+ //adding high score event listener
+ highScoresBtn.addEventListener("click", showHighScores)
+
+ //adding clear scores event listener
+ clearScoresBtn.addEventListener("click", function clearScores() {
+  localStorage.clear("highScores")
+ })
