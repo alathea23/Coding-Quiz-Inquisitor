@@ -151,6 +151,8 @@ function selectAnswer() {
     }
   })
 
+  //this focus is not triggering correctly in safari or iphone - focus events are not triggered on touch screens  - also likely issue with Hover trigger in CSS for color
+  // try this stack overflow solution https://stackoverflow.com/questions/57310622/unable-to-focus-dom-element-in-touch-events    
   var youreRight = document.querySelector(".btn:focus.correct")
  // var youreWrong = document.querySelector(".btn:focus.incorrect")
 
@@ -232,6 +234,7 @@ function resetState() {
 function quizGenRestart () {
   scoreContainer.classList.add('hide')
   quizGen (timeLeft)
+  score = 0
 }
 
 //start button listener
